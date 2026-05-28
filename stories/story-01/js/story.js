@@ -8,85 +8,130 @@
   const count = panels.length;
   const angleStep = 360 / count;
 
-  let sceneTimeline = [];
-  let currentScene = -1;
+  const sceneTimeline = [
+    { start: 0, end: 45 },
+    { start: 45, end: 59 },
+    { start: 59, end: 70 },
+    { start: 70, end: 82 },
+    { start: 82, end: 95 },
+    { start: 95, end: 134 },
+  ];
 
-  function buildTimeline(duration) {
-    const seg = duration / count;
-    sceneTimeline = [];
-    for (let i = 0; i < count; i++) {
-      sceneTimeline.push({ start: Math.round(i * seg), end: Math.round((i + 1) * seg) });
-    }
-    sceneTimeline[count - 1].end = Math.ceil(duration);
+  let currentScene = -1;
+  let transitioning = false;
+  let overlay = null;
+  let audioStarted = false;
+
+  function delay(ms) {
+    return new Promise(r => setTimeout(r, ms));
   }
 
-  function updateScene(time) {
-    if (!sceneTimeline.length) return;
-    let nextScene = -1;
+  async function zoomIn(panel) {
+    if (overlay) return;
+    const img = panel?.querySelector('img');
+    if (!img) return;
+
+    const el = document.createElement('div');
+    el.style.cssText = 'position:absolute;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;background:rgba(5,2,8,0.92);opacity:0;transition:opacity 0.6s ease;';
+    const i = document.createElement('img');
+    i.src = img.src;
+    i.style.cssText = 'max-width:90%;max-height:90%;object-fit:contain;border-radius:4px;box-shadow:0 0 40px rgba(200,146,42,0.3);transform:scale(0.3);transition:transform 0.8s cubic-bezier(0.4,0,0.2,1);';
+    el.appendChild(i);
+    stage.appendChild(el);
+    overlay = el;
+    el.offsetHeight;
+    el.style.opacity = '1';
+    i.style.transform = 'scale(1)';
+    await delay(800);
+  }
+
+  async function zoomOut() {
+    if (!overlay) return;
+    overlay.querySelector('img').style.transform = 'scale(0.3)';
+    overlay.style.opacity = '0';
+    await delay(600);
+    overlay.remove();
+    overlay = null;
+  }
+
+  function updatePanels(index) {
+    const rot = -(angleStep * index);
+    panelRing.style.transform = `rotate(${rot}deg)`;
+    panels.forEach((p, i) => {
+      p.classList.remove('scene-active', 'scene-adjacent');
+      p.style.transform = `rotate(${-rot}deg)`;
+    });
+    panels[index]?.classList.add('scene-active');
+    panels[(index + 1) % count]?.classList.add('scene-adjacent');
+    panels[(index - 1 + count) % count]?.classList.add('scene-adjacent');
+  }
+
+  async function goToScene(index) {
+    if (transitioning || index === currentScene) return;
+    transitioning = true;
+
+    await zoomOut();
+    updatePanels(index);
+    await delay(1200);
+
+    if (audioStarted || !audio.paused) {
+      await zoomIn(panels[index]);
+    }
+
+    currentScene = index;
+    transitioning = false;
+  }
+
+  function onTimeUpdate(time) {
+    let next = -1;
     for (let i = 0; i < sceneTimeline.length; i++) {
       if (time >= sceneTimeline[i].start && time < sceneTimeline[i].end) {
-        nextScene = i;
+        next = i;
         break;
       }
     }
-
-    if (nextScene === -1 || nextScene === currentScene) return;
-
-    currentScene = nextScene;
-
-    const rotation = -(angleStep * currentScene);
-    panelRing.style.transform = `rotate(${rotation}deg)`;
-
-    panels.forEach((panel, i) => {
-      panel.classList.remove('scene-active', 'scene-adjacent');
-
-      const counterRotation = -rotation;
-      panel.style.transform = `rotate(${counterRotation}deg)`;
-
-      if (i === currentScene) {
-        panel.classList.add('scene-active');
-      } else {
-        const nextIdx = (currentScene + 1) % count;
-        const prevIdx = (currentScene - 1 + count) % count;
-        if (i === nextIdx || i === prevIdx) {
-          panel.classList.add('scene-adjacent');
-        }
-      }
-    });
+    if (next === -1 || next === currentScene || transitioning) return;
+    goToScene(next);
   }
 
-  audio.addEventListener('loadedmetadata', () => buildTimeline(audio.duration));
-  audio.addEventListener('timeupdate', () => updateScene(audio.currentTime));
-  audio.addEventListener('play', () => updateScene(audio.currentTime));
+  audio.addEventListener('timeupdate', () => onTimeUpdate(audio.currentTime));
 
-  audio.addEventListener('ended', () => {
-    panelRing.style.transform = 'rotate(0deg)';
-    panels.forEach((panel, i) => {
-      panel.classList.remove('scene-active', 'scene-adjacent');
-      panel.style.transform = 'rotate(0deg)';
-    });
-    currentScene = -1;
+  audio.addEventListener('play', () => {
+    audioStarted = true;
+    if (currentScene >= 0 && !overlay) {
+      zoomIn(panels[currentScene]);
+    }
+    onTimeUpdate(audio.currentTime);
   });
 
-  if (audio.readyState >= 1) buildTimeline(audio.duration);
-  updateScene(0);
+  audio.addEventListener('ended', async () => {
+    if (transitioning) return;
+    transitioning = true;
+    await zoomOut();
+    panelRing.style.transform = 'rotate(0deg)';
+    panels.forEach(p => {
+      p.classList.remove('scene-active', 'scene-adjacent');
+      p.style.transform = 'rotate(0deg)';
+    });
+    currentScene = -1;
+    transitioning = false;
+  });
+
+  currentScene = 0;
+  panels[0]?.classList.add('scene-active');
+  panels[1]?.classList.add('scene-adjacent');
+  panels[count - 1]?.classList.add('scene-adjacent');
 
   audio.play().catch(() => {
-    const overlay = document.createElement('div');
-    overlay.id = 'audioStartOverlay';
-    overlay.className = 'audio-start-overlay';
-    overlay.innerHTML = `
-      <div class="overlay-content">
-        <span class="overlay-icon">☸</span>
-        <p>Click anywhere to start the story</p>
-      </div>
-    `;
-    document.body.appendChild(overlay);
-
+    const o = document.createElement('div');
+    o.id = 'audioStartOverlay';
+    o.className = 'audio-start-overlay';
+    o.innerHTML = '<div class="overlay-content"><span class="overlay-icon">☸</span><p>Click anywhere to start the story</p></div>';
+    document.body.appendChild(o);
     const start = e => {
       audio.play();
-      overlay.classList.add('fade-out');
-      setTimeout(() => overlay.remove(), 600);
+      o.classList.add('fade-out');
+      setTimeout(() => o.remove(), 600);
       document.removeEventListener('click', start);
       document.removeEventListener('touchstart', start);
     };

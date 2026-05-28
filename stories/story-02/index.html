@@ -9,10 +9,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Noto+Serif+Sinhala:wght@300;400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../../assets/shared-css/thorana-stage.css" />
   <link rel="stylesheet" href="css/story.css" />
+  <link rel="icon" type="image/x-icon" href="../../assets/images/favicon.ico">
 </head>
 <body>
 
-  <div class="thorana-stage">
+  <div class="thorana-stage" data-disable-chase>
     <div class="stage-inner" id="stageInner">
 
       <div class="arch-bg" aria-hidden="true">
@@ -157,6 +158,10 @@
     </section>
   </div>
 
+  <audio id="storyAudio" preload="auto" controls style="display:none; position:fixed; bottom:10px; left:50%; transform:translateX(-50%); z-index:999; width:300px; opacity:0.9;">
+  </audio>
+
   <script src="../../assets/shared-js/thorana-stage.js"></script>
+  <script src="js/story.js"></script>
 </body>
 </html>

@@ -10,11 +10,13 @@
 
   const sceneTimeline = [
     { start: 0, end: 20 },
-    { start: 20, end: 52 },
-    { start: 52, end: 78 },
-    { start: 78, end: 104 },
-    { start: 104, end: 130 },
-    { start: 130, end: 161 },
+    { start: 20, end: 40 },
+    { start: 40, end: 60 },
+    { start: 60, end: 80 },
+    { start: 80, end: 100 },
+    { start: 100, end: 120 },
+    { start: 120, end: 140 },
+    { start: 140, end: 160 },
   ];
 
   let currentScene = -1;
@@ -122,20 +124,31 @@
   panels[1]?.classList.add('scene-adjacent');
   panels[count - 1]?.classList.add('scene-adjacent');
 
-  audio.play().catch(() => {
-    const o = document.createElement('div');
-    o.id = 'audioStartOverlay';
-    o.className = 'audio-start-overlay';
-    o.innerHTML = '<div class="overlay-content"><span class="overlay-icon">☸</span><p>Click anywhere to start the story</p></div>';
-    document.body.appendChild(o);
-    const start = e => {
-      audio.play();
-      o.classList.add('fade-out');
-      setTimeout(() => o.remove(), 600);
-      document.removeEventListener('click', start);
-      document.removeEventListener('touchstart', start);
-    };
-    document.addEventListener('click', start);
-    document.addEventListener('touchstart', start);
-  });
+  const hasSource = audio.querySelector('source') ? !!audio.querySelector('source').src : !!audio.src;
+
+  if (!hasSource) {
+    let timerIdx = 0;
+    zoomIn(panels[0]);
+    setInterval(() => {
+      timerIdx = (timerIdx + 1) % sceneTimeline.length;
+      goToScene(timerIdx);
+    }, 15000);
+  } else {
+    audio.play().catch(() => {
+      const o = document.createElement('div');
+      o.id = 'audioStartOverlay';
+      o.className = 'audio-start-overlay';
+      o.innerHTML = '<div class="overlay-content"><span class="overlay-icon">☸</span><p>Click anywhere to start the story</p></div>';
+      document.body.appendChild(o);
+      const start = e => {
+        audio.play();
+        o.classList.add('fade-out');
+        setTimeout(() => o.remove(), 600);
+        document.removeEventListener('click', start);
+        document.removeEventListener('touchstart', start);
+      };
+      document.addEventListener('click', start);
+      document.addEventListener('touchstart', start);
+    });
+  }
 })();

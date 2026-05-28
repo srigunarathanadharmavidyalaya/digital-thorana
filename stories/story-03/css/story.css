@@ -3,5 +3,136 @@
   --accent-b:     #c8922a;
   --ring-glow:    #e07b10;
   --panel-bg:     #1a0a08;
-  --panel-glow:   rgba(224,123,16,0.2);
+  --panel-glow:   rgba(224,123,16,0.25);
 }
+
+.panel-inner img {
+  object-fit: cover;
+  object-position: center center;
+}
+
+.narrative-panel.diamond .panel-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
+
+.narrative-panel.diamond .panel-outer {
+  transform: none;
+}
+
+.narrative-panel.diamond .panel-inner {
+  transform: none;
+}
+
+.narrative-panel.square,
+.narrative-panel.diamond {
+  width: 16%;
+}
+
+.narrative-panel.square .panel-outer,
+.narrative-panel.diamond .panel-outer {
+  border-radius: 50%;
+  border: 3px solid var(--accent-b);
+  box-shadow:
+    0 0 0 4px var(--accent-a),
+    0 0 0 8px var(--accent-b),
+    0 0 0 11px var(--accent-a),
+    0 0 30px var(--panel-glow),
+    0 0 60px rgba(200, 137, 42, 0.3),
+    inset 0 0 20px rgba(0,0,0,0.6);
+}
+
+.narrative-panel.square .panel-inner,
+.narrative-panel.diamond .panel-inner {
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.narrative-panel.square .panel-inner img,
+.narrative-panel.diamond .panel-inner img {
+  border-radius: 50%;
+}
+
+.narrative-panel.square .panel-outer::before,
+.narrative-panel.diamond .panel-outer::before {
+  content: '';
+  position: absolute;
+  inset: -7px;
+  border: 2px dashed var(--accent-b);
+  border-radius: 50%;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.panel-ring {
+  transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.narrative-panel {
+  transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1), scale 0.8s ease, box-shadow 0.8s ease;
+  will-change: transform;
+  scale: 0.8;
+  opacity: 0.7;
+  z-index: 2;
+}
+
+.narrative-panel.scene-active {
+  scale: 1.35;
+  opacity: 1;
+  z-index: 10;
+}
+
+.narrative-panel.scene-active .panel-outer {
+  box-shadow:
+    0 0 0 4px var(--accent-a),
+    0 0 0 8px var(--accent-b),
+    0 0 0 11px var(--accent-a),
+    0 0 40px var(--accent-b),
+    0 0 70px var(--accent-b),
+    inset 0 0 25px rgba(200,137,42,0.15);
+}
+
+.narrative-panel.scene-adjacent {
+  scale: 0.95;
+  opacity: 0.9;
+  z-index: 3;
+}
+
+.audio-start-overlay{
+  position:fixed;inset:0;z-index:9999;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(5,2,8,.92);
+  cursor:pointer;
+  animation:overlayIn .5s ease-out;
+}
+.overlay-content{
+  text-align:center;
+  pointer-events:none;
+}
+.overlay-icon{
+  display:block;
+  font-size:clamp(2.5rem,6vw,4.5rem);
+  color:var(--accent-b, #c8922a);
+  animation:coreSpin 8s linear infinite;
+  margin-bottom:1rem;
+  text-shadow:0 0 40px rgba(200,146,42,.4);
+}
+.overlay-content p{
+  font-family:'Cinzel Decorative',serif;
+  font-size:clamp(.75rem,2vw,1.1rem);
+  color:var(--accent-b, #c8922a);
+  letter-spacing:.12em;
+  text-shadow:0 0 20px rgba(200,146,42,.3);
+}
+.audio-start-overlay.fade-out{
+  opacity:0;
+  transition:opacity .6s ease-out;
+}
+@keyframes overlayIn{
+  from{opacity:0}
+  to{opacity:1}
+}
+@keyframes coreSpin{to{transform:rotate(360deg)}}
