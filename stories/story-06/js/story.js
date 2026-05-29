@@ -122,20 +122,22 @@
   panels[1]?.classList.add('scene-adjacent');
   panels[count - 1]?.classList.add('scene-adjacent');
 
-  audio.play().catch(() => {
-    const o = document.createElement('div');
-    o.id = 'audioStartOverlay';
-    o.className = 'audio-start-overlay';
-    o.innerHTML = '<div class="overlay-content"><span class="overlay-icon">☸</span><p>Click anywhere to start the story</p></div>';
-    document.body.appendChild(o);
-    const start = e => {
-      audio.play();
-      o.classList.add('fade-out');
-      setTimeout(() => o.remove(), 600);
-      document.removeEventListener('click', start);
-      document.removeEventListener('touchstart', start);
-    };
-    document.addEventListener('click', start);
-    document.addEventListener('touchstart', start);
-  });
+  document.addEventListener('entry-complete', () => {
+    audio.play().catch(() => {
+      const o = document.createElement('div');
+      o.id = 'audioStartOverlay';
+      o.className = 'audio-start-overlay';
+      o.innerHTML = '<div class="overlay-content"><span class="overlay-icon">☸</span><p>Click anywhere to start the story</p></div>';
+      document.body.appendChild(o);
+      const start = e => {
+        audio.play();
+        o.classList.add('fade-out');
+        setTimeout(() => o.remove(), 600);
+        document.removeEventListener('click', start);
+        document.removeEventListener('touchstart', start);
+      };
+      document.addEventListener('click', start);
+      document.addEventListener('touchstart', start);
+    });
+  }, { once: true });
 })();

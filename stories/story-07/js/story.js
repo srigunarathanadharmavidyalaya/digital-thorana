@@ -9,14 +9,12 @@
   const angleStep = 360 / count;
 
   const sceneTimeline = [
-    { start: 0, end: 20 },
-    { start: 20, end: 40 },
-    { start: 40, end: 60 },
-    { start: 60, end: 80 },
-    { start: 80, end: 100 },
+    { start: 0, end: 24 },
+    { start: 24, end: 49 },
+    { start: 49, end: 70 },
+    { start: 70, end: 80 },
+    { start: 80, end: 100  },
     { start: 100, end: 120 },
-    { start: 120, end: 140 },
-    { start: 140, end: 160 },
   ];
 
   let currentScene = -1;
@@ -124,16 +122,7 @@
   panels[1]?.classList.add('scene-adjacent');
   panels[count - 1]?.classList.add('scene-adjacent');
 
-  const hasSource = audio.querySelector('source') ? !!audio.querySelector('source').src : !!audio.src;
-
-  if (!hasSource) {
-    let timerIdx = 0;
-    zoomIn(panels[0]);
-    setInterval(() => {
-      timerIdx = (timerIdx + 1) % sceneTimeline.length;
-      goToScene(timerIdx);
-    }, 15000);
-  } else {
+  document.addEventListener('entry-complete', () => {
     audio.play().catch(() => {
       const o = document.createElement('div');
       o.id = 'audioStartOverlay';
@@ -150,5 +139,5 @@
       document.addEventListener('click', start);
       document.addEventListener('touchstart', start);
     });
-  }
+  }, { once: true });
 })();

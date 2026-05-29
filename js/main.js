@@ -158,8 +158,9 @@ document.getElementById('yr').textContent = new Date().getFullYear();
       const cx = w / 2;
       const cy = h / 2;
 
+      const step = 360 / photos.length;
       for (let i = 0; i < photos.length; i++) {
-        const baseAngle = ((i * 60) - 90) * (Math.PI / 180);
+        const baseAngle = ((i * step) - 90) * (Math.PI / 180);
         const total = baseAngle + offsetRad;
         const x = (cx + Math.cos(total) * r) / w * 100;
         const y = (cy + Math.sin(total) * r) / h * 100;

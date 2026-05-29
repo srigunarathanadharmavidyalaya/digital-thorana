@@ -246,7 +246,7 @@ body::after{
 .photo-label{
   position:absolute;
   bottom:-1.8rem;
-  font-size:.5rem;font-weight:600;
+  font-size:.75rem;font-weight:600;
   color:var(--ivory);
   text-shadow:0 0 6px rgba(0,0,0,.8);
   line-height:1.2;
@@ -260,7 +260,7 @@ body::after{
   .photo-node:hover .photo-label{opacity:1}
 }
 @media(hover:none){
-  .photo-label{opacity:1;font-size:.46rem}
+  .photo-label{opacity:1;font-size:.65rem}
 }
 
 /* ===== LOTUS CORE (Sahasrara) ===== */
@@ -279,8 +279,8 @@ body::after{
 }
 .c1{
   width:100%;height:100%;
-  border:2px solid rgba(155,89,182,.6);
-  box-shadow:0 0 30px rgba(155,89,182,.3), inset 0 0 20px rgba(155,89,182,.1);
+  border:2px solid rgba(182, 89, 162, 0.6);
+  box-shadow:0 0 30px rgba(182, 89, 174, 0.3), inset 0 0 20px rgba(182, 89, 162, 0.1);
 }
 .c2{
   width:78%;height:78%;
@@ -306,13 +306,13 @@ body::after{
   border:3px solid var(--gold);
   box-shadow:
     0 0 20px rgba(155,89,182,.9),
-    0 0 50px rgba(155,89,182,.4),
-    0 0 80px rgba(200,146,42,.2);
+    0 0 50px rgba(182, 89, 171, 0.4),
+    0 0 80px rgba(200, 42, 171, 0.2);
   display:flex;align-items:center;justify-content:center;
 }
 
 .core-symbol{
-  font-size:clamp(1.2rem,2.5vw,2rem);
+  font-size:clamp(2rem,5vw,4rem);
   color:var(--ivory);
   text-shadow:0 0 10px var(--gold);
   animation:coreSpin 8s linear infinite;
@@ -333,7 +333,7 @@ body::after{
 /* ===== RESPONSIVE ===== */
 @media(max-width:600px){
   .photo-node{width:18%}
-  .photo-label{font-size:.4rem;bottom:-1.4rem}
+  .photo-label{font-size:.55rem;bottom:-1.4rem}
 }
 #6-cover{
   width:50%;height:100%;
@@ -341,3 +341,4 @@ body::after{
   display:block;
   filter:brightness(.9) saturate(1.05);
 }
+

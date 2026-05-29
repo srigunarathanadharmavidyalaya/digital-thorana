@@ -1,9 +1,9 @@
 :root {
-  --accent-a:     #8b1a1a;
-  --accent-b:     #1a8a7a;
-  --ring-glow:    #1a8a7a;
-  --panel-bg:     #0a1010;
-  --panel-glow:   rgba(26,138,122,0.25);
+  --accent-a:     #6a0dad;
+  --accent-b:     #ffb300;
+  --ring-glow:    #6a0dad;
+  --panel-bg:     #120618;
+  --panel-glow:   rgba(106,13,173,0.25);
 }
 
 .panel-inner img {
@@ -40,7 +40,7 @@
     0 0 0 8px var(--accent-b),
     0 0 0 11px var(--accent-a),
     0 0 30px var(--panel-glow),
-    0 0 60px rgba(26, 138, 122, 0.3),
+    0 0 60px rgba(255, 179, 0, 0.3),
     inset 0 0 20px rgba(0,0,0,0.6);
 }
 
@@ -92,7 +92,7 @@
     0 0 0 11px var(--accent-a),
     0 0 40px var(--accent-b),
     0 0 70px var(--accent-b),
-    inset 0 0 25px rgba(26,138,122,0.15);
+    inset 0 0 25px rgba(106,13,173,0.15);
 }
 
 .narrative-panel.scene-adjacent {
@@ -115,17 +115,17 @@
 .overlay-icon{
   display:block;
   font-size:clamp(2.5rem,6vw,4.5rem);
-  color:var(--accent-b, #1a8a7a);
+  color:var(--accent-b, #ffb300);
   animation:coreSpin 8s linear infinite;
   margin-bottom:1rem;
-  text-shadow:0 0 40px rgba(26,138,122,.4);
+  text-shadow:0 0 40px rgba(255,179,0,.4);
 }
 .overlay-content p{
   font-family:'Cinzel Decorative',serif;
   font-size:clamp(.75rem,2vw,1.1rem);
-  color:var(--accent-b, #1a8a7a);
+  color:var(--accent-b, #ffb300);
   letter-spacing:.12em;
-  text-shadow:0 0 20px rgba(26,138,122,.3);
+  text-shadow:0 0 20px rgba(255,179,0,.3);
 }
 .audio-start-overlay.fade-out{
   opacity:0;

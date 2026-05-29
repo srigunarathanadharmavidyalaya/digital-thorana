@@ -1,3 +1,22 @@
+/* ── 3-SECOND ENTRY DELAY OVERLAY ── */
+(function showEntryOverlay() {
+  const overlay = document.createElement('div');
+  overlay.id = 'entryOverlay';
+  overlay.innerHTML = '<div class="entry-overlay-inner"><span class="entry-overlay-icon">☸</span></div>';
+  document.body.appendChild(overlay);
+
+  requestAnimationFrame(() => {
+    overlay.classList.add('active');
+  });
+
+  setTimeout(() => {
+    overlay.classList.remove('active');
+    overlay.classList.add('fade-out');
+    document.dispatchEvent(new CustomEvent('entry-complete'));
+    setTimeout(() => overlay.remove(), 600);
+  }, 3000);
+})();
+
 (function initThoranaStage() {
   const stage = document.querySelector('.stage-inner');
   if (!stage) return;

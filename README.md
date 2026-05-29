@@ -25,8 +25,8 @@ stories/
     css/story.css              ← Story-specific theme
     js/story.js                ← Keyboard nav, swipe, lazy-load, video end
   story-02/                    ← Mahosadha Jataka  (template ready)
-  story-03/                    ← Kulavaka Jataka   (template ready)
-  story-04/   ...  story-11/  ← Not yet created
+  story-03/                    ← Nimi Jataka
+  story-04/   ...  story-11/   ← Not yet created
 ```
 
 ### Main page (index.html)

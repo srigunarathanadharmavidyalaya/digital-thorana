@@ -123,6 +123,17 @@ body {
   filter: brightness(1.1) saturate(1.2);
 }
 
+.center-dharma {
+  position: absolute;
+  font-size: clamp(1.2rem, 3vw, 2.5rem);
+  color: var(--gold, #f5c842);
+  animation: centerDharmaSpin 4s linear infinite;
+  text-shadow: 0 0 20px rgba(245,200,66,0.6), 0 0 40px rgba(245,200,66,0.3);
+  pointer-events: none;
+  z-index: 6;
+}
+@keyframes centerDharmaSpin { to { transform: rotate(360deg); } }
+
 /* ===== NARRATIVE PANEL RING ===== */
 .panel-ring {
   position: absolute;
@@ -481,3 +492,32 @@ body {
   .footer-emblem { width: 20px; height: 20px; font-size: 0.7rem; }
   .center-figure { width: 12%; }
 }
+
+/* ── ENTRY OVERLAY (3-second delay) ── */
+#entryOverlay{
+  position:fixed;inset:0;z-index:99999;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--night,#0a0608);
+  opacity:0;
+  transition:opacity 0.3s ease;
+  pointer-events:none;
+}
+#entryOverlay.active{
+  opacity:1;
+  pointer-events:auto;
+}
+#entryOverlay.fade-out{
+  opacity:0;
+  transition:opacity 0.6s ease;
+}
+.entry-overlay-inner{
+  text-align:center;
+}
+.entry-overlay-icon{
+  display:block;
+  font-size:clamp(3rem,10vw,6rem);
+  color:var(--gold,#f5c842);
+  animation:entrySpin 2s linear infinite;
+  text-shadow:0 0 60px rgba(245,200,66,.4),0 0 120px rgba(245,200,66,.15);
+}
+@keyframes entrySpin{to{transform:rotate(360deg)}}

@@ -124,16 +124,7 @@
   panels[1]?.classList.add('scene-adjacent');
   panels[count - 1]?.classList.add('scene-adjacent');
 
-  const hasSource = audio.querySelector('source') ? !!audio.querySelector('source').src : !!audio.src;
-
-  if (!hasSource) {
-    let timerIdx = 0;
-    zoomIn(panels[0]);
-    setInterval(() => {
-      timerIdx = (timerIdx + 1) % sceneTimeline.length;
-      goToScene(timerIdx);
-    }, 15000);
-  } else {
+  document.addEventListener('entry-complete', () => {
     audio.play().catch(() => {
       const o = document.createElement('div');
       o.id = 'audioStartOverlay';
@@ -150,5 +141,5 @@
       document.addEventListener('click', start);
       document.addEventListener('touchstart', start);
     });
-  }
+  }, { once: true });
 })();
