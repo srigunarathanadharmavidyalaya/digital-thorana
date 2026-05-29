@@ -312,7 +312,7 @@ body::after{
 }
 
 .core-symbol{
-  font-size:clamp(2rem,5vw,4rem);
+  font-size:clamp(2rem,6vw,7rem);
   color:var(--ivory);
   text-shadow:0 0 10px var(--gold);
   animation:coreSpin 8s linear infinite;
