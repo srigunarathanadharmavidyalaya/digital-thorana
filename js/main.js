@@ -2,7 +2,7 @@ document.getElementById('yr').textContent = new Date().getFullYear();
 
 /* ── TWINKLE DOTS ── */
 (function initDots() {
-  const dots = 40;
+  const dots = 80;
   for (let i = 0; i < dots; i++) {
     const dot = document.createElement('span');
     dot.className = 'dot';
@@ -10,8 +10,8 @@ document.getElementById('yr').textContent = new Date().getFullYear();
     dot.style.cssText = `
       width:${size}px;height:${size}px;
       left:${Math.random()*100}%;top:${Math.random()*100}%;
-      --dur:${2+Math.random()*3}s;
-      animation-delay:${Math.random()*4}s;
+      --dur:${0.5+Math.random()*1}s;
+      animation-delay:${Math.random()*2}s;
     `;
     document.body.appendChild(dot);
   }
@@ -23,7 +23,7 @@ document.getElementById('yr').textContent = new Date().getFullYear();
   const ctx    = canvas.getContext('2d');
 
   let W, H, cx, cy;
-  const PARTICLES = 55;
+  const PARTICLES = 120;
   const pool = [];
 
   const COLOURS = [
@@ -97,14 +97,14 @@ document.getElementById('yr').textContent = new Date().getFullYear();
     return {
       x: cx + Math.cos(angle) * (20 + Math.random() * 80),
       y: cy + Math.sin(angle) * (20 + Math.random() * 80),
-      vx: Math.cos(angle) * (0.12 + Math.random() * 0.32),
-      vy: Math.sin(angle) * (0.12 + Math.random() * 0.32) - (0.2 + Math.random() * 0.2),
+      vx: Math.cos(angle) * (0.8 + Math.random() * 1.2),
+      vy: Math.sin(angle) * (0.8 + Math.random() * 1.2) - (0.5 + Math.random() * 0.3),
       size: 1.5 + Math.random() * 3.5,
       colour: COLOURS[Math.floor(Math.random() * COLOURS.length)],
       alpha: 0.4 + Math.random() * 0.6,
       decay: 0.004 + Math.random() * 0.006,
       wobble: Math.random() * Math.PI * 2,
-      wobbleSpeed: 0.02 + Math.random() * 0.03,
+      wobbleSpeed: 0.08 + Math.random() * 0.12,
     };
   }
 
