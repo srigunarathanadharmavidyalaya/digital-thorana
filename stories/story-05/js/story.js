@@ -14,9 +14,7 @@
     { start: 40, end: 60 },
     { start: 60, end: 80 },
     { start: 80, end: 100 },
-    { start: 100, end: 120 },
-    { start: 120, end: 140 },
-    { start: 140, end: 160 },
+    { start: 100, end: 122 },
   ];
 
   let currentScene = -1;

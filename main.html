@@ -91,7 +91,7 @@
   </footer>
 
   <audio id="bgm" src="./assets/audio/bgm.mp3" loop preload="auto"></audio>
-  <script>!function(){var a=document.getElementById('bgm');if(!a)return;a.volume=0.25;var t=sessionStorage.getItem('bgmTime');a.currentTime=t?parseFloat(t):0;a.play().then(function(){a.muted=false}).catch(function(){a.muted=true;a.play();document.addEventListener('click',function f(){a.muted=false;document.removeEventListener('click',f)},{once:true})});window.addEventListener('beforeunload',function(){try{sessionStorage.setItem('bgmTime',a.currentTime)}catch(e){}})}();</script>
+  <script>!function(){var a=document.getElementById('bgm');if(!a)return;window.addEventListener('beforeunload',function(){try{sessionStorage.setItem('bgmTime',a.currentTime)}catch(e){}});var t=sessionStorage.getItem('bgmTime');if(t){a.currentTime=parseFloat(t);a.volume=0.25;a.play().catch(function(){})}else{document.addEventListener('click',function f(){a.volume=0.25;a.play().catch(function(){});document.removeEventListener('click',f)},{once:true})}}();</script>
   <script src="js/main.js"></script>
 </body>
 </html>
