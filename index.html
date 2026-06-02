@@ -42,19 +42,19 @@
         </a>
         <a class="photo-node" href="stories/story-02/index.html" data-story="story-02">
           <span class="photo-inner">
-            <img src="./assets/images/mahosadha/s_6.png" alt="මහෝසධ ජාතකය"/>
+            <img src="./assets/images/mahosadha/s_6.jpeg" alt="මහෝසධ ජාතකය"/>
           </span>
           <span class="photo-label">මහෝසධ</span>
         </a>
         <a class="photo-node" href="stories/story-03/index.html" data-story="story-03">
           <span class="photo-inner">
-            <img src="./assets/images/nimi/s_1.png" alt="නිමි ජාතකය"/>
+            <img src="./assets/images/nimi/s_1.jpeg" alt="නිමි ජාතකය"/>
           </span>
           <span class="photo-label">නිමි</span>
         </a>
         <a class="photo-node" href="stories/story-05/index.html" data-story="story-05">
           <span class="photo-inner">
-            <img src="./assets/images/sutasoma/s_1.png" alt="සුතසෝම ජාතකය"/>
+            <img src="./assets/images/sutasoma/s_1.jpeg" alt="සුතසෝම ජාතකය"/>
           </span>
           <span class="photo-label">සුතසෝම</span>
         </a>
@@ -66,7 +66,7 @@
         </a>
         <a class="photo-node" href="stories/story-07/index.html" data-story="story-07">
           <span class="photo-inner">
-            <img src="./assets/images/themiya/s_1.png" alt="තේමිය ජාතකය"/>
+            <img src="./assets/images/themiya/s_1.jpeg" alt="තේමිය ජාතකය"/>
           </span>
           <span class="photo-label">තේමිය</span>
         </a>
@@ -90,7 +90,7 @@
     <p>සදහම් දානය &nbsp;·&nbsp; Dhamma Dana &nbsp;·&nbsp; Vesak <span id="yr"></span></p>
   </footer>
 
-  <audio id="bgm" src="./assets/audio/bgm.mp3" loop preload="auto"></audio>
+  <audio id="bgm" src="./assets/audio/bgm1.mp3" loop preload="auto"></audio>
   <script>!function(){var a=document.getElementById('bgm');if(!a)return;var t=sessionStorage.getItem('bgmTime');a.currentTime=t?parseFloat(t):0;a.volume=0;a.play().then(function(){a.volume=0.25}).catch(function(){a.muted=true;a.play().then(function(){requestAnimationFrame(function(){a.muted=false;a.volume=0.25})}).catch(function(){});document.addEventListener('click',function f(){a.muted=false;a.volume=0.25;document.removeEventListener('click',f)},{once:true})});window.addEventListener('beforeunload',function(){try{sessionStorage.setItem('bgmTime',a.currentTime)}catch(e){}})}();</script>
   <script src="js/main.js"></script>
 </body>
